@@ -11,12 +11,13 @@ namespace CRUD
     {
         public static MySqlConnection conexion()
         {
-            string servidor = "127.0.0.1";
-            string bd = "tienda";
-            string usuario = "root";
-            string password = "";
+            //string servidor = "127.0.0.1";
+            //string bd = "tienda";
+            //string usuario = "root";
+            //string password = "";
 
-            string cadenaConexion = "Database=" + bd + "; Data Source=" + servidor + "; User Id= " + usuario + "; Password=" + password+"";
+            //Database=" + bd + "; Data Source=" + servidor + "; User Id= " + usuario + "; Password=" + password+"";
+            string cadenaConexion = "SERVER=db4free.net;PORT=3306;DATABASE=dbjose;UID=josecid;PWD=Desiree123;";
 
             try
             {
