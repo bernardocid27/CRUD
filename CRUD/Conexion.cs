@@ -17,7 +17,8 @@ namespace CRUD
             //string password = "";
 
             //Database=" + bd + "; Data Source=" + servidor + "; User Id= " + usuario + "; Password=" + password+"";
-            string cadenaConexion = "SERVER=db4free.net;PORT=3306;DATABASE=dbjose;UID=josecid;PWD=Desiree123;";
+            //string cadenaConexion = "SERVER=db4free.net;PORT=3306;DATABASE=dbjose;UID=josecid;PWD=Desiree123;";
+            string cadenaConexion = "SERVER=remotemysql.com;PORT=3306;DATABASE=5oZvBu9Tgh;UID=5oZvBu9Tgh;PWD=U9lz5KygNt;";
 
             try
             {

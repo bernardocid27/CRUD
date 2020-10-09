@@ -20,44 +20,77 @@ namespace CRUD
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            String codigo = txtCodigo.Text;
+            MySqlDataReader reader = null;
+
+            string sql = "SELECT id, codigo, nombre, descripcion, precio_publico, existencias FROM productos WHERE codigo LIKE '" + codigo + "' LIMIT 1";
+            MySqlConnection conexionBD = Conexion.conexion();
+            conexionBD.Open();
+
             try
             {
-                String codigo = txtCodigo.Text;
-                String nombre = txtNombre.Text;
-                String descripcion = txtDescripcion.Text;
-                double precio_publico = double.Parse(txtPrecioPublico.Text);
-                int existencias = int.Parse(txtExistencias.Text);
-
-                if (codigo != "" && nombre != "" && descripcion != "" && precio_publico > 0 && existencias > 0)
+                MySqlCommand comando = new MySqlCommand(sql, conexionBD);
+                reader = comando.ExecuteReader();
+                if (reader.HasRows)
                 {
-
-                    string sql = "INSERT INTO productos (codigo, nombre, descripcion, precio_publico, existencias) VALUES ('" + codigo + "', '" + nombre + "','" + descripcion + "','" + precio_publico + "','" + existencias + "')";
-
-                    MySqlConnection conexionBD = Conexion.conexion();
-                    conexionBD.Open();
-
+                    while (reader.Read())
+                    {
+                        MessageBox.Show("Ya existe este codigo");
+                    }
+                }
+                else
+                {
+                    conexionBD.Close();
                     try
                     {
-                        MySqlCommand comando = new MySqlCommand(sql, conexionBD);
-                        comando.ExecuteNonQuery();
-                        MessageBox.Show("Registro guardado");
-                        limpiar();
+                        String codigo2 = txtCodigo.Text;
+                        String nombre = txtNombre.Text;
+                        String descripcion = txtDescripcion.Text;
+                        double precio_publico = double.Parse(txtPrecioPublico.Text);
+                        int existencias = int.Parse(txtExistencias.Text);
+
+                        if (codigo2 != "" && nombre != "" && descripcion != "" && precio_publico > 0 && existencias > 0)
+                        {
+
+                            string sql2 = "INSERT INTO productos (codigo, nombre, descripcion, precio_publico, existencias) VALUES ('" + codigo2 + "', '" + nombre + "','" + descripcion + "','" + precio_publico + "','" + existencias + "')";
+
+                            //MySqlConnection conexionBD = Conexion.conexion();
+                            conexionBD.Open();
+
+                            try
+                            {
+                                MySqlCommand comando2 = new MySqlCommand(sql2, conexionBD);
+                                comando2.ExecuteNonQuery();
+                                MessageBox.Show("Registro guardado");
+                                limpiar();
+                            }
+                            catch (MySqlException ex)
+                            {
+                                MessageBox.Show("Error al guardar: " + ex.Message);
+                            }
+                            //finally
+                            //{
+                            //    conexionBD.Close();
+                            //}
+                        }
+                        else
+                        {
+                            MessageBox.Show("Debe completar todos los campos");
+                        }
                     }
-                    catch (MySqlException ex)
+                    catch (FormatException fex)
                     {
-                        MessageBox.Show("Error al guardar: " + ex.Message);
+                        MessageBox.Show("Datos incorrectos: " + fex.Message);
                     }
-                    finally
-                    {
-                        conexionBD.Close();
-                    }
-                } else
-                {
-                    MessageBox.Show("Debe completar todos los campos");
                 }
-            } catch(FormatException fex)
+            }
+            catch (MySqlException ex)
             {
-                MessageBox.Show("Datos incorrectos: " + fex.Message);
+                MessageBox.Show("Error al buscar " + ex.Message);
+            }
+            finally
+            {
+                conexionBD.Close();
             }
         }
 
