@@ -20,7 +20,7 @@ namespace CRUD
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            2try
+            try
             {
                 String codigo = txtCodigo.Text;
                 String nombre = txtNombre.Text;
